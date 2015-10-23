@@ -7,8 +7,7 @@ module BambooHR
 
     base_uri "https://api.bamboohr.com"
 
-    attr_accessor :key
-    attr_accessor :subdomain
+    attr_accessor :key, :subdomain
 
     def initialize(params={})
       @key = params[:key]
