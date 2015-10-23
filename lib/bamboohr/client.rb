@@ -10,6 +10,11 @@ module BambooHR
     attr_accessor :key
     attr_accessor :subdomain
 
+    def initialize(params={})
+      @key = params[:key]
+      @subdomain = params[:subdomain]
+    end
+
     def employee_list
       JSON.parse(api_get('v1/employees/directory').body)['employees']
     end
