@@ -10,15 +10,20 @@ module BambooHR
     attr_accessor :key
     attr_accessor :subdomain
 
-    def employee_list!
-      self.class.get("/api/gateway.php/#{subdomain}/v1/employees/directory", basic_auth: auth, headers: headers)
+    def employee_list
+      JSON.parse(api_get('v1/employees/directory').body)['employees']
     end
 
-    def employee_list
-      JSON.parse employee_list!.body
+    def time_off
+      JSON.parse(api_get('v1/time_off/requests').body)
+    end
+
+    def whos_out
+      JSON.parse(api_get('v1/time_off/whos_out').body)
     end
 
     private
+
     def headers
       { 'Accept' => 'application/json' }
     end
@@ -26,5 +31,10 @@ module BambooHR
     def auth
       { username: key, password: "x" }
     end
+
+    def api_get(api_path)
+      self.class.get("/api/gateway.php/#{subdomain}/#{api_path}", basic_auth: auth, headers: headers)
+    end
+
   end
 end
